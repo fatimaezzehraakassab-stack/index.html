@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma galerie de photos interactive</title>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f2efe9;
+      color: #1d1d1d;
+      margin: 0;
+      padding: 2rem 1rem;
+    }
+    header, main { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 2rem; margin-bottom: .25rem; }
+    p.intro { margin-top: 0; max-width: 60ch; }
+    .galerie {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    figure {
+      margin: 0;
+      background: #fff;
+      border: 3px solid #1d1d1d;
+      padding: .5rem;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      filter: grayscale(100%);
+      transition: filter .3s;
+    }
+    /* État actif : survol souris OU focus clavier */
+    figure.actif {
+      border-color: #0b5cad;
+      outline: 3px solid #0b5cad;
+    }
+    figure.actif img { filter: none; }
+    figcaption { padding-top: .5rem; font-size: .95rem; }
+    @media (prefers-reduced-motion: reduce) {
+      figure img { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Ma galerie de photos</h1>
+    <p class="intro">Passez la souris sur une image ou naviguez avec la touche Tab pour la faire apparaître en couleur.</p>
+  </header>
+
+  <main>
+    <!-- Les titres se suivent sans sauter de niveau : h1 puis h2 -->
+    <h2>Mes six photos préférées</h2>
+
+    <div class="galerie">
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo1.jpg" alt="Coucher de soleil orangé sur la mer, avec la silhouette d'un voilier à l'horizon">
+        <figcaption>Coucher de soleil sur la mer</figcaption>
+      </figure>
+
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo2.jpg" alt="Ruelle étroite d'une médina bordée de murs ocre et de lanternes en métal">
+        <figcaption>Ruelle de la médina</figcaption>
+      </figure>
+
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo3.jpg" alt="Sommet enneigé de montagne dominant une vallée verte">
+        <figcaption>Montagne et vallée</figcaption>
+      </figure>
+
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo4.jpg" alt="Chat roux endormi en boule sur le rebord d'une fenêtre ensoleillée">
+        <figcaption>Chat à la fenêtre</figcaption>
+      </figure>
+
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo5.jpg" alt="Étal de marché coloré rempli d'épices en pyramides rouges, jaunes et vertes">
+        <figcaption>Épices au marché</figcaption>
+      </figure>
+
+      <figure onmouseover="activer(this)" onmouseleave="desactiver(this)" onfocus="activer(this)" onblur="desactiver(this)">
+        <img src="images/photo6.jpg" alt="Chemin de forêt traversé par des rayons de lumière à travers les arbres">
+        <figcaption>Sentier en forêt</figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <script>
+    // Appelée par onmouseover et onfocus
+    function activer(element) {
+      element.classList.add("actif");
+    }
+
+    // Appelée par onmouseleave et onblur
+    function desactiver(element) {
+      element.classList.remove("actif");
+    }
+
+    // Ajoute tabindex="0" à chaque figure pour l'accès au clavier
+    function ajouterTabindex() {
+      console.log("L'événement load s'est déclenché : ajout des tabindex");
+      var figures = document.getElementsByTagName("figure");
+      for (var i = 0; i < figures.length; i++) {
+        figures[i].setAttribute("tabindex", "0");
+      }
+      console.log(figures.length + " figures rendues accessibles au clavier");
+    }
+
+    // Écouteur pour le chargement de la page
+    window.addEventListener("load", ajouterTabindex);
+  </script>
+</body>
+</html>
